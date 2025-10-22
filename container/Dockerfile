@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.url="https://github.com/miac-research/psmd"
 LABEL org.opencontainers.image.description="Ready-to-use container image for PSMD"
 LABEL org.opencontainers.image.licenses="Revised BSD (3-clause)"
 LABEL org.opencontainers.image.documentation="https://github.com/miac-research/psmd/wiki"
-LABEL org.opencontainers.image.version="1.9.0"
-LABEL version="1.9.0"
+LABEL org.opencontainers.image.version="1.9.1"
+LABEL version="1.9.1"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG="en_US.UTF-8" \
@@ -19,6 +19,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Install OS dependencies and fix locale for Apptainer
 RUN apt-get update -qq && apt-get install -y -q --no-install-recommends \
         adduser=3.137* \
+        bc=1.07.1* \
         dc=1.07.1* \
         locales=2.39* \
         wget=1.21.4* \
@@ -40,8 +41,9 @@ RUN wget --progress=dot:giga --no-check-certificate \
 RUN conda install -y \
     -c https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/ \
     -c conda-forge \
+        fsl-bet2=2111.9 \
         fsl-data_standard=2208.0 \
-        fsl-tbss=2111.1=hb6de94e_3 \
+        fsl-tbss=2111.2 \
         pillow=10.4.0 \
         setuptools=78.1.1 \
  && sed -i -e '105s/^/# /' -e '106s/^/# /' -e '107s/^/# /' -e '108s/^/# /' -e '109s/^/# /' /opt/conda/bin/tbss_1_preproc \
