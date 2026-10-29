@@ -1,0 +1,9 @@
+name: psmd-tool
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - jupyterlab
+  - nibabel
+  - pandas
+  - matplotlib
