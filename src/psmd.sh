@@ -3,6 +3,8 @@
 # FOR MORE INFORMATION, PLEASE VISIT: http://www.psmd-marker.com
 #
 # PSMD processing pipeline, v1.9.1 (2025-10)
+# MRI-CSZS fork patch (2026-10): fixed hemisphere MSMD (-g -o) — split block was
+# gated to PSMD-only and hemisphere MSMD read an unset variable; core computation unchanged.
 #
 # IMPORTANT: This tool is NOT a medical device and for research use only!
 # Do NOT use this tool for diagnosis, prognosis, monitoring or any other
@@ -392,7 +394,7 @@ if [ ${hemispheres} == false ] && [ ${metric} == MSMD ];then
 fi
 
 # Left and right hemisphere metrics (new in version 1.6)
-if [ ${hemispheres} == true ] && [ ${metric} == PSMD ];then
+if [ ${hemispheres} == true ];then
   fslmaths MD_skeletonized_masked.nii.gz -roi  0 90 0 -1 0 -1 0 -1 MD_skeletonized_masked_R.nii.gz
   fslmaths MD_skeletonized_masked.nii.gz -roi 91 90 0 -1 0 -1 0 -1 MD_skeletonized_masked_L.nii.gz
 fi
@@ -410,10 +412,10 @@ fi
 if [ ${hemispheres} == true ] && [ ${metric} == MSMD ];then
   mdskel=MD_skeletonized_masked_L.nii.gz
   msmdcalc
-  msmdL="${psmdresult}"
+  msmdL="${msmdresult}"
   mdskel=MD_skeletonized_masked_R.nii.gz
   msmdcalc
-  msmdR="${psmdresult}"	
+  msmdR="${msmdresult}"
   [ ${silent} == false ] && { echo ""; echo "${metric} is (left,right) ${msmdL},${msmdR}"; echo ""; }
   [ ${silent} == true ] && echo "${msmdL},${msmdR}"
 fi
