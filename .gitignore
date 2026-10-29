@@ -1,2 +1,7 @@
 .DS_Store
 .vscode
+psmdtemp/
+psmd_batch_work/
+outputs/
+*.log
+*.pdf
